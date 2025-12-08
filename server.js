@@ -30,7 +30,7 @@ db.connect((err) => {
         console.error('MySQL connection error:', err);
         return;
     }
-    console.log('✅ Connected to MySQL database');
+    console.log('Connected to MySQL database');
 });
 
 // Make db accessible to routes
@@ -57,5 +57,6 @@ app.get('/', (req, res) => {
 
 // Start server
 app.listen(PORT, () => {
-    console.log('🚀 Server running on http://localhost:${PORT}');
+    console.log('Server running on http://localhost:${PORT}');
+
 });

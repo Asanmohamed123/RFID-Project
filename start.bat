@@ -22,7 +22,8 @@ echo Installing dependencies...
 call npm install express --no-save
 
 REM Start server
-echo 🚀 STARTING SERVER...
-echo 🌐 Open: http://localhost:3306
+echo STARTING SERVER...
+echo Open: http://localhost:3306
 
 node server.js
+

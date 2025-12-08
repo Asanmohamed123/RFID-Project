@@ -1,7 +1,5 @@
 @echo off
-echo ========================================
 echo STARTING RFID WAREHOUSE API - EMERGENCY
-echo ========================================
 
 REM Create package.json if missing
 if not exist "package.json" (
@@ -24,8 +22,7 @@ echo Installing dependencies...
 call npm install express --no-save
 
 REM Start server
-echo ========================================
 echo 🚀 STARTING SERVER...
 echo 🌐 Open: http://localhost:3306
-echo ========================================
+
 node server.js

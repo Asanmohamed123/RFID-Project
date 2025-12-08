@@ -1,13 +1,13 @@
 const API_BASE_URL = 'http://localhost:3306/api';
 
 async function testBackendConnection() {
-    console.log('🔗 Testing backend connection...');
+    console.log('Testing backend connection...');
     
     try {
         const response = await fetch(`${API_BASE_URL}/`);
         const data = await response.json();
         
-        console.log('✅ Backend connected:', data.message);
+        console.log('Backend connected:', data.message);
         
         // Update status display
         const statusElement = document.getElementById('apiStatus') || document.querySelector('.status');
@@ -18,7 +18,7 @@ async function testBackendConnection() {
         
         return true;
     } catch (error) {
-        console.error('❌ Backend connection failed:', error);
+        console.error('Backend connection failed:', error);
         
         const statusElement = document.getElementById('apiStatus') || document.querySelector('.status');
         if (statusElement) {
@@ -32,7 +32,7 @@ async function testBackendConnection() {
 
 // Test immediately on page load
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 RFID System Loading...');
+    console.log('RFID System Loading...');
     testBackendConnection();
     
     // Test every 10 seconds
@@ -58,7 +58,7 @@ async function checkAPIStatus() {
         document.getElementById('apiStatus').innerHTML = 
             '<i class="fas fa-circle" style="color: #EF4444"></i> API Not Connected';
         document.getElementById('apiStatus').style.color = '#EF4444';
-        console.log('⚠️ Backend server might not be running. Start it with: npm run dev');
+        console.log('Backend server might not be running. Start it with: npm run dev');
     }
 }
 
@@ -102,27 +102,27 @@ function showTab(tabName) {
 }
 
 async function createItem() {
-    console.log('🎯 CREATE ITEM function called');
+    console.log('CREATE ITEM function called');
     
     // Get form values
     const itemCode = document.getElementById('itemCode').value.trim();
     const itemName = document.getElementById('itemName').value.trim();
     const itemDesc = document.getElementById('itemDesc').value.trim();
     
-    console.log('📝 Form values:', { itemCode, itemName, itemDesc });
+    console.log('Form values:', { itemCode, itemName, itemDesc });
     
     // Validation
     if (!itemCode || !itemName) {
-        alert('❌ Please fill Item Code and Name');
+        alert('Please fill Item Code and Name');
         return;
     }
     
     // Show loading
     const resultDiv = document.getElementById('itemResult');
-    resultDiv.innerHTML = '<p style="color: #F59E0B;">⏳ Creating item...</p>';
+    resultDiv.innerHTML = '<p style="color: #F59E0B;">Creating item...</p>';
     
     try {
-        console.log('📤 Sending request to:', `${API_URL}/items`);
+        console.log('Sending request to:', `${API_URL}/items`);
         
         const response = await fetch(`${API_BASE_URL}/items`, {
             method: 'POST',
@@ -137,26 +137,26 @@ async function createItem() {
             })
         });
         
-        console.log('📥 Response status:', response.status);
+        console.log('Response status:', response.status);
         
         // Try to parse response
         let data;
         try {
             const text = await response.text();
-            console.log('📥 Raw response:', text);
+            console.log('Raw response:', text);
             data = text ? JSON.parse(text) : {};
         } catch (parseError) {
-            console.error('❌ JSON parse error:', parseError);
-            resultDiv.innerHTML = '<p style="color: #EF4444;">❌ Server returned invalid response</p>';
+            console.error('JSON parse error:', parseError);
+            resultDiv.innerHTML = '<p style="color: #EF4444;">Server returned invalid response</p>';
             return;
         }
         
         if (response.ok) {
-            console.log('✅ Item created successfully:', data);
+            console.log('Item created successfully:', data);
             
             resultDiv.innerHTML = `
                 <p style="color: #10B981;">
-                    ✅ <strong>Item Created Successfully!</strong><br>
+                    <strong>Item Created Successfully!</strong><br>
                     Code: ${itemCode}<br>
                     Name: ${itemName}<br>
                     ID: ${data.item_id || data.id}
@@ -174,7 +174,7 @@ async function createItem() {
             }, 1000);
             
         } else {
-            console.error('❌ Server error:', data);
+            console.error('Server error:', data);
             
             let errorMsg = data.error || 'Unknown error';
             if (response.status === 400) errorMsg = 'Bad request - check your data';
@@ -182,17 +182,17 @@ async function createItem() {
             
             resultDiv.innerHTML = `
                 <p style="color: #EF4444;">
-                    ❌ <strong>Error ${response.status}:</strong> ${errorMsg}
+                    <strong>Error ${response.status}:</strong> ${errorMsg}
                 </p>
             `;
         }
         
     } catch (error) {
-        console.error('❌ Network error:', error);
+        console.error('Network error:', error);
         
         resultDiv.innerHTML = `
             <p style="color: #EF4444;">
-                ❌ <strong>Network Error:</strong> ${error.message}<br>
+                <strong>Network Error:</strong> ${error.message}<br>
                 <small>Check if backend is running at ${API_URL}</small>
             </p>
         `;
@@ -206,12 +206,12 @@ async function getAllItems() {
         const response = await fetch(`${API_BASE_URL}/items`);
         
         if (!response.ok) {
-            console.error('❌ Failed to fetch items:', response.status);
+            console.error('Failed to fetch items:', response.status);
             return;
         }
         
         const items = await response.json();
-        console.log('📋 Items fetched:', items.length);
+        console.log('Items fetched:', items.length);
         
         const container = document.getElementById('allItems') || document.getElementById('allItemsList');
         if (!container) return;
@@ -241,7 +241,7 @@ async function getAllItems() {
         container.innerHTML = html;
         
     } catch (error) {
-        console.error('❌ Error fetching items:', error);
+        console.error('Error fetching items:', error);
     }
 }
 
@@ -253,7 +253,7 @@ async function registerRFID() {
     const expiryDate = document.getElementById('expiryDate').value;
     
     if (!tagUID || !itemCode) {
-        showMessage('registerResult', '❌ Tag UID and Item Code are required', 'error');
+        showMessage('registerResult', 'Tag UID and Item Code are required', 'error');
         return;
     }
     
@@ -273,7 +273,7 @@ async function registerRFID() {
         
         if (response.ok) {
             showMessage('registerResult', 
-                `✅ RFID tag registered successfully!<br>Tag: ${tagUID}<br>Item: ${itemCode}`, 
+                `RFID tag registered successfully!<br>Tag: ${tagUID}<br>Item: ${itemCode}`, 
                 'success');
             
             // Clear form
@@ -282,10 +282,10 @@ async function registerRFID() {
             document.getElementById('batchNo').value = '';
             document.getElementById('expiryDate').value = '';
         } else {
-            showMessage('registerResult', `❌ Error: ${data.error}`, 'error');
+            showMessage('registerResult', `Error: ${data.error}`, 'error');
         }
     } catch (error) {
-        showMessage('registerResult', `❌ Network error: ${error.message}`, 'error');
+        showMessage('registerResult', `Network error: ${error.message}`, 'error');
     }
 }
 
@@ -294,7 +294,7 @@ async function receiveItem() {
     const tagUID = document.getElementById('receiveTagUID').value.trim();
     
     if (!tagUID) {
-        showMessage('receiveResult', '❌ Please enter Tag UID', 'error');
+        showMessage('receiveResult', 'Please enter Tag UID', 'error');
         return;
     }
     
@@ -309,15 +309,15 @@ async function receiveItem() {
         
         if (response.ok) {
             showMessage('receiveResult', 
-                `✅ Item received successfully!<br>Tag: ${tagUID}<br>Location: Receiving Area (REC-01)`, 
+                `Item received successfully!<br>Tag: ${tagUID}<br>Location: Receiving Area (REC-01)`, 
                 'success');
             
             document.getElementById('receiveTagUID').value = '';
         } else {
-            showMessage('receiveResult', `❌ Error: ${data.error}`, 'error');
+            showMessage('receiveResult', `Error: ${data.error}`, 'error');
         }
     } catch (error) {
-        showMessage('receiveResult', `❌ Network error: ${error.message}`, 'error');
+        showMessage('receiveResult', `Network error: ${error.message}`, 'error');
     }
 }
 
@@ -327,12 +327,12 @@ async function moveItem() {
     const location = document.getElementById('locationSelect').value;
     
     if (!tagUID) {
-        showMessage('moveResult', '❌ Please enter Tag UID', 'error');
+        showMessage('moveResult', 'Please enter Tag UID', 'error');
         return;
     }
     
     if (!location) {
-        showMessage('moveResult', '❌ Please select a destination', 'error');
+        showMessage('moveResult', 'Please select a destination', 'error');
         return;
     }
     
@@ -351,15 +351,15 @@ async function moveItem() {
         if (response.ok) {
             const locationName = document.getElementById('locationSelect').selectedOptions[0].text;
             showMessage('moveResult', 
-                `✅ Item moved successfully!<br>Tag: ${tagUID}<br>To: ${locationName}`, 
+                `Item moved successfully!<br>Tag: ${tagUID}<br>To: ${locationName}`, 
                 'success');
             
             document.getElementById('moveTagUID').value = '';
         } else {
-            showMessage('moveResult', `❌ Error: ${data.error}`, 'error');
+            showMessage('moveResult', `Error: ${data.error}`, 'error');
         }
     } catch (error) {
-        showMessage('moveResult', `❌ Network error: ${error.message}`, 'error');
+        showMessage('moveResult', `Network error: ${error.message}`, 'error');
     }
 }
 
@@ -368,7 +368,7 @@ async function searchByItem() {
     const itemCode = document.getElementById('searchItemCode').value.trim();
     
     if (!itemCode) {
-        showMessage('searchResult', '❌ Please enter Item Code to search', 'error');
+        showMessage('searchResult', 'Please enter Item Code to search', 'error');
         return;
     }
     
@@ -378,7 +378,7 @@ async function searchByItem() {
         
         if (response.ok) {
             if (data.count === 0) {
-                showMessage('searchResult', 'ℹ️ No items found with that code', 'info');
+                showMessage('searchResult', 'No items found with that code', 'info');
                 return;
             }
             
@@ -397,10 +397,10 @@ async function searchByItem() {
             
             document.getElementById('searchResult').innerHTML = html;
         } else {
-            showMessage('searchResult', `❌ Error: ${data.error}`, 'error');
+            showMessage('searchResult', `Error: ${data.error}`, 'error');
         }
     } catch (error) {
-        showMessage('searchResult', `❌ Network error: ${error.message}`, 'error');
+        showMessage('searchResult', `Network error: ${error.message}`, 'error');
     }
 }
 
@@ -409,7 +409,7 @@ async function searchByTag() {
     const tagUID = document.getElementById('searchTagUID').value.trim();
     
     if (!tagUID) {
-        showMessage('searchResult', '❌ Please enter Tag UID to locate', 'error');
+        showMessage('searchResult', 'Please enter Tag UID to locate', 'error');
         return;
     }
     
@@ -419,7 +419,7 @@ async function searchByTag() {
         
         if (response.ok) {
             let html = `
-                <h3>📍 Item Location Found</h3>
+                <h3>Item Location Found</h3>
                 <div class="location-result">
                     <div class="location-header">
                         <h4>${data.item_name || 'Unknown Item'} (${data.item_code})</h4>
@@ -440,10 +440,10 @@ async function searchByTag() {
             
             document.getElementById('searchResult').innerHTML = html;
         } else {
-            showMessage('searchResult', `❌ Error: ${data.error}`, 'error');
+            showMessage('searchResult', `Error: ${data.error}`, 'error');
         }
     } catch (error) {
-        showMessage('searchResult', `❌ Network error: ${error.message}`, 'error');
+        showMessage('searchResult', `Network error: ${error.message}`, 'error');
     }
 }
 
@@ -477,7 +477,7 @@ function showMessage(elementId, message, type) {
 
 // When page loads
 document.addEventListener('DOMContentLoaded', () => {
-    console.log('🚀 RFID Warehouse System Started');
+    console.log('RFID Warehouse System Started');
     
     // Check API status
     checkAPIStatus();
@@ -496,7 +496,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // Open chatbot modal
 function openChatbot() {
-    console.log('💬 Opening chatbot...');
+    console.log('Opening chatbot...');
     const modal = document.getElementById('chatbotModal');
     modal.style.display = 'flex';
     document.body.style.overflow = 'hidden'; // Prevent scrolling
@@ -509,7 +509,7 @@ function openChatbot() {
 
 // Close chatbot modal
 function closeChatbot() {
-    console.log('💬 Closing chatbot...');
+    console.log('Closing chatbot...');
     const modal = document.getElementById('chatbotModal');
     modal.style.display = 'none';
     document.body.style.overflow = 'auto'; // Re-enable scrolling
@@ -670,13 +670,13 @@ function clearChat() {
 
 // Make call (redirect to call page)
 function makeCall() {
-    console.log('📞 Redirecting to call page...');
+    console.log('Redirecting to call page...');
     window.location.href = 'call.html';
 }
 
 // Send email
 function sendEmail() {
-    console.log('📧 Opening email client...');
+    console.log('Opening email client...');
     window.open('mailto:hello@cargoz.com?subject=RFID%20Warehouse%20Support&body=Hello%20Cargoz%20Team,', '_blank');
 }
 
@@ -739,5 +739,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 
 

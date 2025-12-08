@@ -1,8 +1,4 @@
-// This file connects to MySQL database
-
 const mysql = require('mysql2/promise');
-
-// Create connection to database
 const pool = mysql.createPool({
     host: process.env.DB_HOST || 'localhost',      
     user: process.env.DB_USER || 'root',           
@@ -30,3 +26,4 @@ db.connect((err) => {
 // Make db available to other files
 
 module.exports = db;
+

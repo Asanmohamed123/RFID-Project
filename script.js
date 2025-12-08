@@ -1,13 +1,4 @@
-// ============================================
-// RFID WAREHOUSE SYSTEM - JAVASCRIPT
-// ============================================
-
-// API Configuration
 const API_BASE_URL = 'http://localhost:3306/api';
-
-// ============================================
-// CONNECTION TESTER
-// ============================================
 
 async function testBackendConnection() {
     console.log('🔗 Testing backend connection...');
@@ -48,10 +39,6 @@ document.addEventListener('DOMContentLoaded', () => {
     setInterval(testBackendConnection, 10000);
 });
 
-// ============================================
-// 1. INITIALIZATION FUNCTIONS
-// ============================================
-
 // Check if backend API is running
 async function checkAPIStatus() {
     try {
@@ -91,10 +78,6 @@ async function updateDashboard() {
     }
 }
 
-// ============================================
-// 2. TAB NAVIGATION
-// ============================================
-
 function showTab(tabName) {
     // Hide all tabs
     document.querySelectorAll('.tab-content').forEach(tab => {
@@ -117,10 +100,6 @@ function showTab(tabName) {
         updateDashboard();
     }
 }
-
-// ============================================
-// 3. ITEM MANAGEMENT
-// ============================================
 
 async function createItem() {
     console.log('🎯 CREATE ITEM function called');
@@ -266,10 +245,6 @@ async function getAllItems() {
     }
 }
 
-// ============================================
-// 4. RFID MANAGEMENT
-// ============================================
-
 // Register RFID tag
 async function registerRFID() {
     const tagUID = document.getElementById('tagUID').value.trim();
@@ -388,10 +363,6 @@ async function moveItem() {
     }
 }
 
-// ============================================
-// 5. SEARCH FUNCTIONS
-// ============================================
-
 // Search by item code
 async function searchByItem() {
     const itemCode = document.getElementById('searchItemCode').value.trim();
@@ -476,10 +447,6 @@ async function searchByTag() {
     }
 }
 
-// ============================================
-// 6. HELPER FUNCTIONS
-// ============================================
-
 // Show message in result boxes
 function showMessage(elementId, message, type) {
     const element = document.getElementById(elementId);
@@ -508,10 +475,6 @@ function showMessage(elementId, message, type) {
     `;
 }
 
-// ============================================
-// 7. INITIALIZE APPLICATION
-// ============================================
-
 // When page loads
 document.addEventListener('DOMContentLoaded', () => {
     console.log('🚀 RFID Warehouse System Started');
@@ -530,10 +493,6 @@ document.addEventListener('DOMContentLoaded', () => {
     // Show dashboard by default
     updateDashboard();
 });
-
-// ============================================
-// CHATBOT FUNCTIONS
-// ============================================
 
 // Open chatbot modal
 function openChatbot() {
@@ -709,10 +668,6 @@ function clearChat() {
     }
 }
 
-// ============================================
-// CALL FUNCTIONS
-// ============================================
-
 // Make call (redirect to call page)
 function makeCall() {
     console.log('📞 Redirecting to call page...');
@@ -731,10 +686,6 @@ function dialNumber(number) {
         window.open(`tel:${number}`, '_blank');
     }
 }
-
-// ============================================
-// INITIALIZE CHATBOT
-// ============================================
 
 // Add typing dots animation CSS
 const style = document.createElement('style');
@@ -788,4 +739,5 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+
 

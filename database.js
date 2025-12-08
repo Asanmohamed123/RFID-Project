@@ -16,15 +16,16 @@ module.exports = pool;
 // Try to connect
 db.connect((err) => {
     if (err) {
-        console.error('❌ Cannot connect to database:', err.message);
-        console.log('💡 TIP: Check if MySQL is running and password is correct');
+        console.error('Cannot connect to database:', err.message);
+        console.log('TIP: Check if MySQL is running and password is correct');
         return;
     }
-    console.log('✅ Connected to MySQL database successfully!');
+    console.log('Connected to MySQL database successfully!');
 });
 
 // Make db available to other files
 
 module.exports = db;
+
 
 

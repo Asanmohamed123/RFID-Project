@@ -1,0 +1,530 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>RFID Warehouse System</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- HEADER -->
+    <div class="header">
+        <div class="logo">
+            <i class="fas fa-warehouse"></i>
+            <h1>RFID Warehouse Automation System</h1>
+        </div>
+        <div class="status" id="apiStatus">
+            <i class="fas fa-circle"></i> Connecting...
+        </div>
+    </div>
+
+    <!-- MAIN CONTAINER -->
+    <div class="container">
+        <!-- SIDEBAR NAVIGATION -->
+        <div class="sidebar">
+            <button class="nav-btn active" onclick="showTab('dashboard')">
+                <i class="fas fa-home"></i> Dashboard
+            </button>
+            <button class="nav-btn" onclick="showTab('items')">
+                <i class="fas fa-box"></i> Item Master
+            </button>
+            <button class="nav-btn" onclick="showTab('register')">
+                <i class="fas fa-tag"></i> Register RFID
+            </button>
+            <button class="nav-btn" onclick="showTab('receive')">
+                <i class="fas fa-truck-loading"></i> Receive Items
+            </button>
+            <button class="nav-btn" onclick="showTab('move')">
+                <i class="fas fa-dolly"></i> Move Items
+            </button>
+            <button class="nav-btn" onclick="showTab('search')">
+                <i class="fas fa-search"></i> Search & Locate
+            </button>
+            
+        <!-- Need Help? Box -->
+        <div class="help-box">
+        <h3><i class="fas fa-question-circle"></i> Need Help?</h3>
+        <div class="help-buttons">
+        
+        <!-- Chat Button -->
+        <button class="help-btn" onclick="openChatbot()">
+            <i class="fas fa-comment-dots"></i> Chat
+        </button>
+        
+        <!-- Call Button -->
+        <button class="help-btn" onclick="makeCall()">
+            <i class="fas fa-phone"></i> Call
+        </button>
+        
+        <!-- Email Button -->
+        <button class="help-btn" onclick="sendEmail()">
+            <i class="fas fa-envelope"></i> Email
+        </button>
+    </div>
+    
+    <div class="help-tips">
+        <p><i class="fas fa-lightbulb"></i> Quick Tips:</p>
+        <p>1. Start backend server first</p>
+        <p>2. Fill all required fields</p>
+        <p>3. Check API status above</p>
+    </div>
+</div>
+</div>
+            <!-- MAIN CONTENT AREA -->
+            <div class="main-content">
+            <!-- DASHBOARD TAB -->
+            <div id="dashboard" class="tab-content active">
+                <h2><i class="fas fa-tachometer-alt"></i> Dashboard</h2>
+                <div class="cards">
+                    <div class="card">
+                        <i class="fas fa-box"></i>
+                        <h3>Total Items</h3>
+                        <p id="totalItems">0</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-tags"></i>
+                        <h3>RFID Tags</h3>
+                        <p id="totalTags">0</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-map-marker-alt"></i>
+                        <h3>Locations</h3>
+                        <p>4</p>
+                    </div>
+                    <div class="card">
+                        <i class="fas fa-exchange-alt"></i>
+                        <h3>Movements</h3>
+                        <p id="totalMovements">0</p>
+                    </div>
+                </div>
+                
+                <div class="quick-actions">
+                    <h3><i class="fas fa-bolt"></i> Quick Actions</h3>
+                    <div class="action-buttons">
+                        <button class="action-btn" onclick="showTab('items')">
+                            <i class="fas fa-plus"></i> Add New Item
+                        </button>
+                        <button class="action-btn" onclick="showTab('register')">
+                            <i class="fas fa-tag"></i> Register RFID
+                        </button>
+                        <button class="action-btn" onclick="showTab('search')">
+                            <i class="fas fa-search"></i> Search Item
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="instructions">
+                    <h3><i class="fas fa-graduation-cap"></i> How to Use This System</h3>
+                    <ol>
+                        <li>📦 <strong>Add Items</strong>: First add items to database</li>
+                        <li>🏷️ <strong>Register Tags</strong>: Attach RFID tags to items</li>
+                        <li>📥 <strong>Receive Items</strong>: When items arrive at warehouse</li>
+                        <li>🚚 <strong>Move Items</strong>: Move items to storage locations</li>
+                        <li>🔍 <strong>Search</strong>: Find items anytime</li>
+                    </ol>
+                </div>
+            </div>
+
+            <!-- ITEM MASTER TAB -->
+            <div id="items" class="tab-content">
+                <h2><i class="fas fa-box"></i> Item Master</h2>
+                <p class="subtitle">Add new items to your warehouse inventory</p>
+                
+                <div class="form-container">
+                    <h3><i class="fas fa-plus-circle"></i> Create New Item</h3>
+                    <div class="form-group">
+                        <label for="itemCode">
+                            <i class="fas fa-barcode"></i> Item Code *
+                        </label>
+                        <input type="text" id="itemCode" placeholder="e.g., ITEM-001">
+                        <small>Unique code for the item</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="itemName">
+                            <i class="fas fa-font"></i> Item Name *
+                        </label>
+                        <input type="text" id="itemName" placeholder="e.g., Perfume Name">
+                        <small>Name of the item</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="itemDesc">
+                            <i class="fas fa-align-left"></i> Description
+                        </label>
+                        <textarea id="itemDesc" rows="3" placeholder="e.g., specifications of item..."></textarea>
+                        <small>Additional details about the item</small>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="createItem()">
+                        <i class="fas fa-save"></i> Save Item
+                    </button>
+                </div>
+                
+                <div class="results-box" id="itemResult">
+                    <h3><i class="fas fa-info-circle"></i> Status</h3>
+                    <p>Fill the form and click "Save Item"</p>
+                </div>
+                
+                <div class="item-list">
+                    <h3><i class="fas fa-list"></i> All Items in Database</h3>
+                    <div id="allItemsList" class="items-grid">
+                        <!-- Items will appear here -->
+                    </div>
+                </div>
+            </div>
+
+            <!-- REGISTER RFID TAB -->
+            <div id="register" class="tab-content">
+                <h2><i class="fas fa-tag"></i> Register RFID Tag</h2>
+                <p class="subtitle">Attach RFID tags to your items</p>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="tagUID">
+                            <i class="fas fa-id-card"></i> RFID Tag UID *
+                        </label>
+                        <input type="text" id="tagUID" placeholder="e.g., E200341201">
+                        <small>Unique ID printed on RFID tag</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="regItemCode">
+                            <i class="fas fa-box"></i> Item Code *
+                        </label>
+                        <input type="text" id="regItemCode" placeholder="Enter item code from Item Master">
+                        <small>Must exist in Item Master first</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="batchNo">
+                            <i class="fas fa-layer-group"></i> Batch Number
+                        </label>
+                        <input type="text" id="batchNo" placeholder="e.g., BATCH-001">
+                        <small>Production batch (optional)</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="expiryDate">
+                            <i class="fas fa-calendar-times"></i> Expiry Date
+                        </label>
+                        <input type="date" id="expiryDate">
+                        <small>For perishable items (optional)</small>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="registerRFID()">
+                        <i class="fas fa-tag"></i> Register Tag
+                    </button>
+                </div>
+                
+                <div class="results-box" id="registerResult">
+                    <h3><i class="fas fa-info-circle"></i> Status</h3>
+                    <p>Fill the form to register an RFID tag</p>
+                </div>
+            </div>
+
+            <!-- RECEIVE ITEMS TAB -->
+            <div id="receive" class="tab-content">
+                <h2><i class="fas fa-truck-loading"></i> Receive Items</h2>
+                <p class="subtitle">When new items arrive at warehouse</p>
+                
+                <div class="info-box">
+                    <i class="fas fa-info-circle"></i>
+                    <p>This simulates items arriving at the <strong>Receiving Area</strong>. 
+                    Items will be automatically placed in REC-01 location.</p>
+                </div>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="receiveTagUID">
+                            <i class="fas fa-id-card"></i> RFID Tag UID *
+                        </label>
+                        <input type="text" id="receiveTagUID" placeholder="Enter registered tag UID">
+                        <small>Tag must be registered first</small>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="receiveItem()">
+                        <i class="fas fa-check-circle"></i> Receive Item
+                    </button>
+                </div>
+                
+                <div class="results-box" id="receiveResult">
+                    <h3><i class="fas fa-info-circle"></i> Status</h3>
+                    <p>Enter a registered tag UID to receive item</p>
+                </div>
+            </div>
+
+            <!-- MOVE ITEMS TAB -->
+            <div id="move" class="tab-content">
+                <h2><i class="fas fa-dolly"></i> Move Items</h2>
+                <p class="subtitle">Move items between warehouse locations</p>
+                
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="moveTagUID">
+                            <i class="fas fa-id-card"></i> RFID Tag UID *
+                        </label>
+                        <input type="text" id="moveTagUID" placeholder="Tag UID of item to move">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label for="locationSelect">
+                            <i class="fas fa-map-marker-alt"></i> Destination *
+                        </label>
+                        <select id="locationSelect">
+                            <option value="">-- Select Location --</option>
+                            <option value="STORAGE-A1">Zone A, Rack 1, Bin 1</option>
+                            <option value="STORAGE-A2">Zone A, Rack 1, Bin 2</option>
+                            <option value="STORAGE-B1">Zone B, Rack 2, Bin 1</option>
+                        </select>
+                        <small>Choose where to move the item</small>
+                    </div>
+                    
+                    <button class="submit-btn" onclick="moveItem()">
+                        <i class="fas fa-exchange-alt"></i> Move Item
+                    </button>
+                </div>
+                
+                <div class="results-box" id="moveResult">
+                    <h3><i class="fas fa-info-circle"></i> Status</h3>
+                    <p>Select item and destination to move</p>
+                </div>
+                
+                <div class="locations-info">
+                    <h3><i class="fas fa-warehouse"></i> Available Locations</h3>
+                    <div class="location-cards">
+                        <div class="location-card">
+                            <h4>REC-01</h4>
+                            <p><i class="fas fa-truck"></i> Receiving Area</p>
+                            <p>All new items arrive here</p>
+                        </div>
+                        <div class="location-card">
+                            <h4>STORAGE-A1</h4>
+                            <p><i class="fas fa-box"></i> Zone A, Rack 1, Bin 1</p>
+                            <p>General storage</p>
+                        </div>
+                        <div class="location-card">
+                            <h4>STORAGE-A2</h4>
+                            <p><i class="fas fa-box"></i> Zone A, Rack 1, Bin 2</p>
+                            <p>General storage</p>
+                        </div>
+                        <div class="location-card">
+                            <h4>STORAGE-B1</h4>
+                            <p><i class="fas fa-box"></i> Zone B, Rack 2, Bin 1</p>
+                            <p>General storage</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- SEARCH TAB -->
+            <div id="search" class="tab-content">
+                <h2><i class="fas fa-search"></i> Search & Locate</h2>
+                <p class="subtitle">Find items in your warehouse</p>
+                
+                <div class="search-container">
+                    <div class="search-box">
+                        <h3><i class="fas fa-barcode"></i> Search by Item Code</h3>
+                        <div class="form-group">
+                            <input type="text" id="searchItemCode" placeholder="e.g., ITEM-001">
+                            <button class="search-btn" onclick="searchByItem()">
+                                <i class="fas fa-search"></i> Search
+                            </button>
+                        </div>
+                    </div>
+                    
+                    <div class="search-box">
+                        <h3><i class="fas fa-id-card"></i> Locate by RFID Tag</h3>
+                        <div class="form-group">
+                            <input type="text" id="searchTagUID" placeholder="e.g., E200341201">
+                            <button class="search-btn" onclick="searchByTag()">
+                                <i class="fas fa-map-marker-alt"></i> Locate
+                            </button>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="results-box" id="searchResult">
+                    <h3><i class="fas fa-info-circle"></i> Search Results</h3>
+                    <p>Use either search method above to find items</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+  <!-- FOOTER -->
+<div class="footer">
+    <div class="footer-container">
+        <!-- Left Section: Warehouse Location -->
+        <div class="footer-section">
+            <h3 class="footer-title">
+                <i class="fas fa-map-marker-alt"></i> Warehouse Location
+            </h3>
+            <div class="location-details">
+                <div class="company-name">RFID Warehouse FZE</div>
+                <p class="address-line">International Saif Zone</p>
+                <p class="address-line">Sharjah</p>
+                <p class="address-line">United Arab Emirates</p>
+                </div>
+            </div>
+        
+        <!-- Middle Section: Contact Us -->
+        <div class="footer-section">
+            <h3 class="footer-title">
+                <i class="fas fa-phone-alt"></i> Contact Us
+            </h3>
+            <div class="contact-details">
+                <div class="contact-heading">Connect with us</div>
+                <p class="contact-line">
+                    <i class="fas fa-envelope"></i> 
+                    <a href="mailto:hello@rfidwarehouse.com">hello@rfidwarehouse123.com</a>
+                </p>
+                <p class="contact-line">
+                    <i class="fas fa-phone"></i> 
+                    <a href="tel:+971 12 345 6789">+971 12 345 6789</a>
+                </p>
+                <p class="contact-line">
+                    <i class="fas fa-mobile-alt"></i> 
+                    <a href="tel:+971 98 765 4321">+971 98 765 4321</a>
+                </p>
+            </div>
+        </div>
+        
+        <!-- Right Section: Follow Us -->
+        <div class="footer-section">
+            <h3 class="footer-title">
+                <i class="fas fa-share-alt"></i> Follow Us
+            </h3>
+            <div class="social-section">
+                <!-- Social Media Icons -->
+                <div class="social-icons-vertical">
+                    <a href="https://instagram.com/rfidwarehouse" target="_blank" class="social-vertical instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>Instagram</span>
+                    </a>
+                    
+                    <a href="https://facebook.com/rfidwarehouse" target="_blank" class="social-vertical facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>Facebook</span>
+                    </a>
+                    
+                    <a href="https://twitter.com/rfidwarehouse" target="_blank" class="social-vertical twitter">
+                        <i class="fab fa-twitter"></i>
+                        <span>Twitter</span>
+                    </a>
+                    
+                    <a href="https://whatsapp.com/company/rfidwarehouse" target="_blank" class="social-vertical whatsapp">
+                        <i class="fab fa-whatsapp"></i>
+                        <span>WhatsApp</span>
+                    </a>
+                </div>
+                
+                <!-- Action Buttons -->
+                <div class="action-buttons-vertical">
+                    <button class="action-btn" onclick="window.open('mailto:hello@rfidwarehouse123.com')">
+                        <i class="fas fa-envelope"></i> Email Us
+                    </button>
+                    
+                    <button class="action-btn" onclick="window.open('tel:+971 12 345 6789')">
+                        <i class="fas fa-phone"></i> Call Now
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Bottom Separator -->
+    <div class="footer-separator">
+        <hr>
+    </div>
+    
+    <!-- Copyright Section -->
+    <div class="footer-bottom">
+        <div class="copyright">
+            <p>2024 RFID Warehouse FZE. All rights reserved.</p>
+            <p class="project-info">RFID Warehouse Automation System | Internship Technical Assessment | Developed by Asan Mohamed</p>
+        </div>
+        
+        <div class="tech-stack">
+            <span><i class="fab fa-html5"></i> HTML5</span>
+            <span><i class="fab fa-css3-alt"></i> CSS3</span>
+            <span><i class="fab fa-js"></i> JavaScript</span>
+            <span><i class="fab fa-node-js"></i> Node.js</span>
+            <span><i class="fas fa-database"></i> MySQL</span>
+        </div>
+    </div>
+</div>  
+
+    <!-- CHATBOT MODAL -->
+<div id="chatbotModal" class="chatbot-modal">
+    <div class="chatbot-container">
+        <!-- Chat Header -->
+        <div class="chat-header">
+            <div class="chat-title">
+                <i class="fas fa-robot"></i>
+                <h3>RFID Warehouse Assistant</h3>
+                <span class="status-dot online"></span>
+                <span class="status-text">Online</span>
+            </div>
+            <button class="close-chat" onclick="closeChatbot()">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <!-- Chat Messages Area -->
+        <div class="chat-messages" id="chatMessages">
+            <!-- Welcome message -->
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">Hello! I'm your RFID Warehouse Assistant. How can I help you today?</p>
+                    <span class="message-time">Just now</span>
+                </div>
+            </div>
+            
+            <!-- Quick questions -->
+            <div class="message bot-message">
+                <div class="message-avatar">
+                    <i class="fas fa-robot"></i>
+                </div>
+                <div class="message-content">
+                    <p class="message-text">Quick questions I can help with:</p>
+                    <div class="quick-questions">
+                        <button class="quick-btn" onclick="askQuestion('How to register RFID tag?')">How to register RFID tag?</button>
+                        <button class="quick-btn" onclick="askQuestion('How to search items?')">How to search items?</button>
+                        <button class="quick-btn" onclick="askQuestion('System requirements?')">System requirements?</button>
+                    </div>
+                    <span class="message-time">Just now</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Chat Input Area -->
+        <div class="chat-input">
+            <div class="word-counter">
+                <span id="wordCount">0</span>/100 words
+            </div>
+            <textarea 
+                id="chatInput" 
+                placeholder="Type your message here... (Max 100 words)"
+                rows="3"
+                maxlength="500"
+                oninput="updateWordCount()"></textarea>
+            <div class="chat-actions">
+                <button class="chat-action-btn" onclick="clearChat()">
+                    <i class="fas fa-trash"></i> Clear
+                </button>
+                <button class="chat-action-btn" onclick="sendMessage()">
+                    <i class="fas fa-paper-plane"></i> Send Message
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="script.js"></script>
+</body>
+</html>

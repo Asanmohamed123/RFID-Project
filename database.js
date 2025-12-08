@@ -4,12 +4,12 @@ const mysql = require('mysql2/promise');
 
 // Create connection to database
 const pool = mysql.createPool({
-    host: process.env.DB_HOST || 'localhost',      // Computer where MySQL is running
-    user: process.env.DB_USER || 'root',           // Username
-    password: process.env.DB_PASSWORD || 'muhammadkhansa',   // Password you set (CHANGE IF DIFFERENT!)
-    database: process.env.DB_NAME || 'rfid_warehouse',  // Database name
+    host: process.env.DB_HOST || 'localhost',      
+    user: process.env.DB_USER || 'root',           
+    password: process.env.DB_PASSWORD || 'muhammadkhansa',   
+    database: process.env.DB_NAME || 'rfid_warehouse',  
     waitForConnections: true,
-    connectionLimit: 10,     // Important for Performance
+    connectionLimit: 10,     
     queueLimit: 0,
     enableKeepAlive: true,
     keepAliveInitialDelay: 0
@@ -28,4 +28,5 @@ db.connect((err) => {
 });
 
 // Make db available to other files
+
 module.exports = db;

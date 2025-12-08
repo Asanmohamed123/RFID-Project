@@ -1,7 +1,3 @@
-/* ============================================
-   RFID WAREHOUSE SYSTEM - STYLES
-   ============================================ */
-
 /* RESET & BASE STYLES */
 * {
     margin: 0;
@@ -101,10 +97,6 @@ body {
     font-size: 1.2rem;
 }
 
-/* ============================================
-   NEED HELP BOX STYLES
-   ============================================ */
-
 .help-box {
     margin-top: 30px;
     padding: 20px;
@@ -158,10 +150,6 @@ body {
     font-size: 13px;
     color: #ecf0f1;
 }
-
-/* ============================================
-   CHATBOT MODAL STYLES
-   ============================================ */
 
 .chatbot-modal {
     display: none;
@@ -418,10 +406,6 @@ body {
     transform: translateY(-2px);
     box-shadow: 0 5px 15px rgba(102, 126, 234, 0.4);
 }
-
-/* ============================================
-   CALL BUTTON STYLES
-   ============================================ */
 
 .call-btn {
     margin-top: 15px;
@@ -742,10 +726,6 @@ h2 {
     gap: 10px;
 }
 
-/* ============================================
-   FOOTER STYLES (Matching Image Design)
-   ============================================ */
-
 .footer {
     background: #c1bdd8;
     color: white;
@@ -1012,7 +992,6 @@ h2 {
 .tech-stack .fa-node-js { color: #339933; }
 .tech-stack .fa-database { color: #00758f; }
 
-/* Responsive Design */
 @media (max-width: 768px) {
     .footer {
         padding: 30px 15px;
@@ -1040,7 +1019,6 @@ h2 {
     }
 }
 
-/* RESPONSIVE DESIGN */
 @media (max-width: 768px) {
     .container {
         flex-direction: column;
@@ -1067,4 +1045,5 @@ h2 {
     .action-buttons {
         flex-direction: column;
     }
+
 }
